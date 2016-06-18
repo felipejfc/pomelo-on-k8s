@@ -1,0 +1,9 @@
+{
+    "name":"pomelo-on-k8s",
+    "version":"0.0.1",
+    "private":false,
+    "dependencies":{
+        "pomelo":"2.0.0"
+    }
+}
+
