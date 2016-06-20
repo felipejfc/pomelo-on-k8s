@@ -1,11 +1,9 @@
 var pomelo = require('pomelo');
-var routeUtil = require('./util/routeUtil.js')
+var routeUtil = require('./util/routeUtil')
+var gameLoop = require('./app/modules/gameLoop')
 
-/**
- * Init app for client.
- */
 var app = pomelo.createApp();
-app.set('name', 'pomelo-on-k8s');
+app.set('name', 'pomelo-on-k8s')
 
 // configure monitor
 app.configure('production|development', function(){
@@ -16,8 +14,8 @@ app.configure('production|development', function(){
         host: process.env.REDIS_HOST,
         port: process.env.REDIS_PORT,
       }
-    });
-});
+    })
+})
 
 // app configuration
 app.configure('production|development', 'connector', function(){
@@ -27,13 +25,13 @@ app.configure('production|development', 'connector', function(){
       heartbeat : 3,
       useDict : true,
       useProtobuf : true
-    });
+    })
   app.route('game', routeUtil.game)
-});
+})
 
 app.configure('production|development', 'game', function(){
-});
-
+  app.load('gameLoop', gameLoop)
+})
 
 // start app
 app.start();

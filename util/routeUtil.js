@@ -1,22 +1,22 @@
 var exp = module.exports
 
 exp.game = function(session, msg, app, cb){
-  var serverId = session.get('serverId')
+  var backendServerId = session.get('backendServerId')
   var servers = app.getServersByType('game')
   var numServers = servers.length
   if(numServers == 0){
     return cb(new Error('no game servers available'))
   }
-  if(!serverId){
+  if(!backendServerId){
     var randomIdx = Math.floor(Math.random() * numServers)
-    serverId = servers[randomIdx].serverId
-    session.set('serverId', serverId)
+    backendServerId = servers[randomIdx].serverId
+    session.set('backendServerId', backendServerId)
     session.pushAll(sendServerId)
   }else{
     sendServerId()
   }
   function sendServerId(){
-    return cb(null, serverId)
+    return cb(null, backendServerId)
   }
 }
 
