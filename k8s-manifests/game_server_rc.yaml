@@ -1,19 +1,19 @@
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: game-server
+  name: pomelo-game-server
   namespace: pomelo
 spec:
   replicas: 2
   selector:
-    app: game-server
+    app: pomelo-game-server
   template:
     metadata:
       labels:
-        app: game-server
+        app: pomelo-game-server
     spec:
       containers:
-      - name: game-server
+      - name: pomelo-game-server
         image: felipejfc/pomelo-on-k8s:0.0.3
         env:
           - name: REDIS_HOST

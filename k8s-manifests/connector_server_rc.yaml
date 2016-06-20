@@ -1,19 +1,19 @@
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: connector-server
+  name: pomelo-connector-server
   namespace: pomelo
 spec:
-  replicas: 1
+  replicas: 2
   selector:
-    app: connector-server
+    app: pomelo-connector-server
   template:
     metadata:
       labels:
-        app: connector-server
+        app: pomelo-connector-server
     spec:
       containers:
-      - name: connector-server
+      - name: pomelo-connector-server
         image: felipejfc/pomelo-on-k8s:0.0.3
         ports:
           - containerPort: 3010

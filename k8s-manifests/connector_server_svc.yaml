@@ -10,5 +10,5 @@ spec:
     - port: 3010
       targetPort: 3010
   selector:
-    app: connector-server
+    app: pomelo-connector-server
   type: "LoadBalancer"
