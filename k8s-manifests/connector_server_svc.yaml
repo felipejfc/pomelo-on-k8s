@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: connector-server-svc
+  name: connector-server-svc
+  namespace: pomelo
+spec:
+  ports:
+    - port: 3010
+      targetPort: 3010
+  selector:
+    app: connector-server
+  type: "LoadBalancer"
