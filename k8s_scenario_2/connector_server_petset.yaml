@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  name: pomelo-connector
+  labels:
+    app: pomelo-connector
+  namespace: pomelo
+spec:
+  ports:
+  - port: 3010
+    name: connector
+  clusterIP: None
+  selector:
+    app: pomelo-connector
+---
+apiVersion: apps/v1alpha1
+kind: PetSet
+metadata:
+  name: pomelo-connector
+  namespace: pomelo
+spec:
+  serviceName: "pomelo-connector"
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: pomelo-connector
+      annotations:
+        pod.alpha.kubernetes.io/initialized: "true"
+    spec:
+      containers:
+      - name: pomelo-connector
+        image: felipejfc/pomelo-on-k8s:0.0.3
+        ports:
+          - containerPort: 3010
+            name: connector
+        env:
+          - name: REDIS_HOST
+            value: redis-service.default
+          - name: REDIS_PORT
+            value: "6379"

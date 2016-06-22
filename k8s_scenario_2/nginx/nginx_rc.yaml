@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+  namespace: pomelo
+spec:
+  ports:
+  - port: 3010
+    targetPort: 3010
+    name: connector
+  selector:
+    app: nginx
+  type: NodePort
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx
+  namespace: pomelo
+spec:
+  replicas: 2
+  selector:
+    app: nginx
+  template:
+    metadata:
+      name: nginx
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 3010
+          volumeMounts:
+            - name: tcp-config-volume
+              mountPath: /etc/nginx/conf.d
+      volumes:
+        - name: tcp-config-volume
+          configMap:
+            name: nginx-tcp-config
