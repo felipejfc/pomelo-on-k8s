@@ -22,3 +22,5 @@ spec:
             value: redis-service.default
           - name: REDIS_PORT
             value: "6379"
+          - name: SERVICE_DOMAIN
+            value: "localhost"

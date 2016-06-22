@@ -5,7 +5,6 @@ var gameLoop = require('./app/modules/gameLoop')
 var app = pomelo.createApp();
 app.set('name', 'pomelo-on-k8s')
 
-// configure monitor
 app.configure('production|development', function(){
   app.set('monitorConfig',
     {
@@ -17,7 +16,6 @@ app.configure('production|development', function(){
     })
 })
 
-// app configuration
 app.configure('production|development', 'connector', function(){
   app.set('connectorConfig',
     {
@@ -29,11 +27,20 @@ app.configure('production|development', 'connector', function(){
   app.route('game', routeUtil.game)
 })
 
+app.configure('production|development', 'gate', function(){
+  app.set('connectorConfig',
+    {
+      connector : pomelo.connectors.hybridconnector,
+      heartbeat : 3,
+      useDict : true,
+      useProtobuf : true
+    })
+})
+
 app.configure('production|development', 'game', function(){
   app.load('gameLoop', gameLoop)
 })
 
-// start app
 app.start();
 
 process.on('uncaughtException', function (err) {
