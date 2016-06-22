@@ -12,7 +12,7 @@ spec:
     name: connector
   selector:
     app: nginx
-  type: NodePort
+  type: LoadBalancer
 ---
 apiVersion: v1
 kind: ReplicationController
@@ -31,9 +31,20 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: nginx
+          image: felipejfc/nginx-ws-lb:0.0.2
           ports:
             - containerPort: 3010
+          env:
+            - name: LISTEN_PORT
+              value: "3010"
+            - name: SERVICE_DOMAIN
+              value: "pomelotest.felipejfc.com"
+            - name: K8S_SERVICE
+              value: "pomelo-connector.pomelo.svc.cluster.local"
+            - name: FORWARD_PORT
+              value: "3010"
+            - name: K8S_DNS_SERVER
+              value: "10.0.0.10"
           volumeMounts:
             - name: config-volume
               mountPath: /etc/nginx/conf.d

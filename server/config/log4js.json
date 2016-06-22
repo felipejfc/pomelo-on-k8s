@@ -5,7 +5,7 @@
     }
   ],
   "levels": {
-    "pomelo": "WARN",
+    "pomelo": "DEBUG",
     "rpc-log" : "ERROR",
     "forward-log": "ERROR"
   },
