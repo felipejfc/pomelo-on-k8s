@@ -35,9 +35,9 @@ spec:
           ports:
             - containerPort: 3010
           volumeMounts:
-            - name: tcp-config-volume
+            - name: config-volume
               mountPath: /etc/nginx/conf.d
       volumes:
-        - name: tcp-config-volume
+        - name: config-volume
           configMap:
-            name: nginx-tcp-config
+            name: nginx-config
