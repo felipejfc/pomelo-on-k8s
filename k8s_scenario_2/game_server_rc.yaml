@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: pomelo-game
+  namespace: pomelo
+spec:
+  replicas: 2
+  selector:
+    app: pomelo-game
+  template:
+    metadata:
+      labels:
+        app: pomelo-game
+    spec:
+      containers:
+      - name: pomelo-game
+        image: felipejfc/pomelo-on-k8s:0.0.4
+        env:
+          - name: REDIS_HOST
+            value: redis.default
+          - name: REDIS_PORT
+            value: "6379"
+          - name: SERVER_TYPE
+            value: "game"
+          - name: FRONTEND
+            value: "false"
